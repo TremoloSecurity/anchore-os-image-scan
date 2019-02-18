@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: check-image-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: check-image
+        image: docker.io/mlbiam/chkimgs
+        env:
+        - name : ANCHORE_CLI_PASS
+          valueFrom:
+            secretKeyRef:
+              key: ANCHORE_ADMIN_PASSWORD
+              name: anchore-anchore-engine
+        - name: ANCHORE_CLI_USER
+          value: admin
+        - name: ANCHORE_CLI_URL
+          value: http://anchore-anchore-engine-api.anchoreio.svc:8228
+        command: ["python3","/usr/local/checkimage/ImagesJob.py","/var/run/secrets/kubernetes.io/serviceaccount/token", "https://kubernetes.default.svc.cluster.local/apis/anchore.tremolo.io/v1/namespaces/anchoreio/check-images/tremolosecurity-images","/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"]
+        volumeMounts: []
+      restartPolicy: Never
+      serviceAccount: test-images
+      serviceAccountName: test-images
+      nodeSelector:
+        tremolo.node.label: cicd
+      volumes: []
+  backoffLimit: 1
