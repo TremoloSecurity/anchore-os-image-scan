@@ -15,13 +15,14 @@ def check_image(image_tag,webhook_url):
 
     image_name_url = "%s/images?%s&history=false" % (anchore_url,  urlencode({"fulltag":image_tag}))
 
-    
+    image_repo = image_tag[0:image_tag.find(':')]
+    print(image_repo)
 
     r = requests.get(image_name_url, auth=(anchore_user, anchore_password))
     
     if r.status_code == 404:
         print("no image, importing")
-        r = requests.post(url="%s/images?autosubscribe=True" % anchore_url,json={"tag":image_tag},auth=(anchore_user, anchore_password))
+        r = requests.post(url="%s/repositories?repository=%s&autosubscribe=True" % (anchore_url , image_repo),auth=(anchore_user, anchore_password))
         if r.status_code == 200:
             print("imported")
 
