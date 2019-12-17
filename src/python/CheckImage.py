@@ -59,7 +59,7 @@ def check_image(image_tag,webhook_url):
     vul_url = "%s/images/%s/vuln/os?vendor_only=True" % (anchore_url,tag_digest)
 
     r = requests.get(vul_url, auth=(anchore_user, anchore_password))
-    print(r.text)
+
     tag_cve_data = json.loads(r.text)
     
     cves = tag_cve_data["vulnerabilities"]
