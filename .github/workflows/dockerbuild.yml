@@ -28,4 +28,4 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.OU_CONTAINER_DEST }}
-          context: "${{ env.GITHUB_WORKSPACE }}/python"
+          context: "${{ github.workspace }}/python"
