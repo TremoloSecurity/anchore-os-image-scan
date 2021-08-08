@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.OU_REG_PASSWORD }}
       - name: workspace
         run: |
-          ls ${{ github.workspace }}
+          pwd
 
       -
         name: Build and push
@@ -32,4 +32,4 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.OU_CONTAINER_DEST }}
-          context: "${{ github.workspace }}/src/python"
+          context: "${{ github.workspace }}/../src/python"
