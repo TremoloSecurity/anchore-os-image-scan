@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.OU_REG_PASSWORD }}
       - name: workspace
         run: |
-          pwd
+          ls src;ls src/python;ls 
 
       -
         name: Build and push
