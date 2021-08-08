@@ -21,6 +21,10 @@ jobs:
         with:
           username: ${{ secrets.OU_REG_USER }}
           password: ${{ secrets.OU_REG_PASSWORD }}
+      - name: workspace
+        run: |
+          ls ${{ github.workspace }}
+
       -
         name: Build and push
         id: docker_build
