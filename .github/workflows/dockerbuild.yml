@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.OU_REG_PASSWORD }}
       - name: workspace
         run: |
-          ls *
+          ls
       -
         name: Build and push
         id: docker_build
