@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-RUN apt-get update;apt-get -y install python3 python3-pip curl && \
+RUN apt-get update;apt-get upgrade;apt-get -y install python3 python3-pip curl && \
     pip3 install requests && \
     groupadd -r checkimage -g 433 && \
     mkdir /usr/local/checkimage && \
