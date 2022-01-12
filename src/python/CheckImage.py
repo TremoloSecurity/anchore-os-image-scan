@@ -16,7 +16,7 @@ def check_image_grype(image_tag,webhook_url):
 
     temp_path = default_tmp_dir + '/' + temp_name
     print("Output to %s" % temp_path)
-    subprocess.run(['/opt/homebrew/bin/grype','-o','json','--file',temp_path,image_tag])
+    subprocess.run(['/usr/local/bin/grype','-o','json','--file',temp_path,image_tag])
     f = open(temp_path)
     jsonResults = json.load(f)
 
