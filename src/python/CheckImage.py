@@ -5,6 +5,38 @@ from urllib import request
 import requests
 import json
 import time
+import subprocess
+import tempfile
+
+
+def check_image_grype(image_tag,webhook_url):
+    print("Checking image %s" % image_tag)
+    default_tmp_dir = tempfile._get_default_tempdir()
+    temp_name = next(tempfile._get_candidate_names())
+
+    temp_path = default_tmp_dir + '/' + temp_name
+    print("Output to %s" % temp_path)
+    subprocess.run(['/opt/homebrew/bin/grype','-o','json','--file',temp_path,image_tag])
+    f = open(temp_path)
+    jsonResults = json.load(f)
+
+    found_updates = False
+
+    for match in jsonResults[u'matches']:
+        if match[u'artifact'][u'type'] != u'java-archive':
+            if match[u'vulnerability'][u'fix'][u'state'] == "fixed":
+                found_updates = True
+                break
+    
+    if found_updates:
+        print("found updates")
+        r = requests.post(webhook_url)
+    else: 
+        print("no updates found")
+
+
+
+
 
 def check_image(image_tag,webhook_url):
     print("Checking image %s" % image_tag)
