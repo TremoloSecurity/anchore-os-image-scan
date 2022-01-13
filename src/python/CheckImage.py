@@ -23,7 +23,8 @@ def check_image_grype(image_tag,webhook_url):
     found_updates = False
 
     for match in jsonResults[u'matches']:
-        if match[u'artifact'][u'type'] != u'java-archive':
+        artifact_type = match[u'artifact'][u'type']
+        if artifact_type == u'dev' or artifact_type == u'rpm':
             if match[u'vulnerability'][u'fix'][u'state'] == "fixed":
                 found_updates = True
                 break
