@@ -42,5 +42,5 @@ jobs:
           push: true
           tags: |
             ${{ secrets.OU_CONTAINER_DEST }}
-            ghcr.io/${{ env.REPO }}/anchore-os-image-scan
+            ghcr.io/${{ env.REPO }}
           context: "src/python"
