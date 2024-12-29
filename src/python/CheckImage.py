@@ -52,7 +52,7 @@ def check_image_grype(image_tag,webhook_url):
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json"
         }
-        r = requests.post(webhook_url,headers-headers)
+        r = requests.post(webhook_url,headers=headers)
     else: 
         print("no updates found")
 
