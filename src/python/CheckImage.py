@@ -8,6 +8,22 @@ import time
 import subprocess
 import tempfile
 
+# Path to the service account token file inside the pod
+TOKEN_PATH = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+
+def get_service_account_token():
+    """
+    Reads the service account token from the file mounted in the Kubernetes pod.
+    """
+    try:
+        with open(TOKEN_PATH, 'r') as token_file:
+            token = token_file.read().strip()
+        return token
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Service account token not found at {TOKEN_PATH}")
+    except Exception as e:
+        raise RuntimeError(f"Error reading service account token: {e}")
+
 
 def check_image_grype(image_tag,webhook_url):
     print("Checking image %s" % image_tag)
@@ -31,7 +47,12 @@ def check_image_grype(image_tag,webhook_url):
     
     if found_updates:
         print("found updates")
-        r = requests.post(webhook_url)
+        token = get_service_account_token()
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json"
+        }
+        r = requests.post(webhook_url,headers-headers)
     else: 
         print("no updates found")
 
