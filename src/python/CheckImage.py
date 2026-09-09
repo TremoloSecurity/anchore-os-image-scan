@@ -41,7 +41,7 @@ def check_image_grype(image_tag,webhook_url):
     for match in jsonResults[u'matches']:
         artifact_type = match[u'artifact'][u'type']
         if artifact_type == u'deb' or artifact_type == u'rpm' or artifact_type == u'ubuntu':
-            if match[u'vulnerability'][u'fix'][u'state'] == "fixed":
+            if match[u'vulnerability'][u'fix'][u'state'] == u'fixed':
                 found_updates = True
                 break
     
