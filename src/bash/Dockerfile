@@ -9,6 +9,7 @@ RUN apt-get update \
         ca-certificates \
         curl \
         jq \
+    && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -eu; \
