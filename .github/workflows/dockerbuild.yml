@@ -43,4 +43,4 @@ jobs:
           tags: |
             ${{ secrets.OU_CONTAINER_DEST }}
             ghcr.io/${{ env.REPO }}:latest
-          context: "src/python"
+          context: "src/bash"
